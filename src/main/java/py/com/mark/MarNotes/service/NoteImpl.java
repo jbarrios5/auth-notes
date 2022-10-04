@@ -29,7 +29,7 @@ public class NoteImpl implements Note{
 
         log.info(String.format("Is token [%s] expiration?",at.getValue()));
         if( LoginUtils.isExpiration(new Date(),at.getExpiration()) )
-            throw new ApiException("Token expirado");
+            throw new ApiException("Token expirado",LoginUtils.TOKEN_EXPIRATION);
 
         log.info(String.format("Going to add note"));
 

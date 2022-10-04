@@ -23,13 +23,11 @@ public class LoginImpl implements Login{
     LoginDAO loginDAO;
     @Override
     public LoginResult userLogin(String document, String password) throws ApiException {
-        User user = new User();
-        user = userDAO.getUserByDocument(document);
-
+        User user = userDAO.getUserByDocument(document);
         if( user == null )
-            throw new ApiException("Ocurrio un error al consultar la DB");
+            throw new ApiException("Ocurrio un error al consultar la DB",LoginUtils.NOT_ACCESS);
         if( !user.getPassword().equals(password) )
-            throw new ApiException("Credenciales incorrectas");
+            throw new ApiException("Credenciales incorrectas",LoginUtils.NOT_ACCESS);
 
         AccessToken accessToken = LoginUtils.createAccessToken();
 

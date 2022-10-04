@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.bind.annotation.*;
 import py.com.mark.MarNotes.Utils.ApiException;
+import py.com.mark.MarNotes.Utils.LoginUtils;
 import py.com.mark.MarNotes.bean.AccessToken;
 import py.com.mark.MarNotes.bean.LoginResult;
 import py.com.mark.MarNotes.service.Login;
@@ -23,7 +24,7 @@ public class AuthAPI {
     public LoginResult login(@PathVariable String documento,@PathVariable String pass) throws ApiException {
         log.info("Starting auth request ...");
         if( documento.isBlank() || pass.isBlank() )
-            throw new ApiException("Credenciales incorrectas");
+            throw new ApiException("Credenciales incorrectas", LoginUtils.NOT_ACCESS);
 
         return login.userLogin(documento,pass);
     }
