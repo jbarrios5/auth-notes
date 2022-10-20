@@ -8,6 +8,6 @@ import java.util.List;
 
 public interface NoteDao {
     public void addNote(Note note);
-    public List<Note> getAllNotes(String  userId);
+    public List<Note> getAllNotes(Integer  userId);
 
 }

@@ -1,5 +1,6 @@
 package py.com.mark.MarNotes.bean;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class AccessToken {
@@ -7,7 +8,7 @@ public class AccessToken {
 
 
 
-    private Date expiration;
+    private Timestamp expiration;
 
 
     public AccessToken() {
@@ -21,11 +22,11 @@ public class AccessToken {
         this.value = value;
     }
 
-    public Date getExpiration() {
+    public Timestamp getExpiration() {
         return expiration;
     }
 
-    public void setExpiration(Date expiration) {
+    public void setExpiration(Timestamp expiration) {
         this.expiration = expiration;
     }
 
