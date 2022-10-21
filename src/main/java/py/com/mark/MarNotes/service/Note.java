@@ -8,8 +8,7 @@ import java.util.List;
 public interface Note {
     public void addNote(py.com.marce.commons.Note  note, Session session) throws ApiException;
 
-
-
+    public void removeNote(Integer id) throws ApiException;
 
     List<py.com.marce.commons.Note> getAllNotes(Integer userId);
 }

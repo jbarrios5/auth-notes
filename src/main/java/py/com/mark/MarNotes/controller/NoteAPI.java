@@ -12,6 +12,7 @@ import py.com.mark.MarNotes.service.SessionService;
 import java.util.List;
 
 @RestController
+@RequestMapping("/note")
 public class NoteAPI {
     Logger log = LoggerFactory.getLogger(NoteAPI.class);
     @Autowired
@@ -19,12 +20,12 @@ public class NoteAPI {
 
     @Autowired
     private SessionService sessionService;
-    @RequestMapping(value = "/note",method = RequestMethod.POST)
+    @RequestMapping(value = "/",method = RequestMethod.POST)
     public void addNote(
             @RequestParam(value = "token",required = true) String token,
             @RequestBody Note note
             ) throws ApiException {
-        log.info(String.format("Starting request for add new note with at %s",token));
+        log.info(String.format("Starting request to add a new note with at %s",token));
         //Get session
         Session session = sessionService.getSessionFromAccessToken(token);
         //todo to make the function better I should to check with a service if sessin is expires
@@ -32,12 +33,12 @@ public class NoteAPI {
 
 
     }
-    @RequestMapping(value = "/note",method = RequestMethod.GET)
+    @RequestMapping(value = "/",method = RequestMethod.GET)
     public List<Note> getNoteByUserId (
             @RequestParam(value = "id",required = true) Integer id,
             @RequestParam(value = "token",required = true) String token
     ) throws ApiException{
-        log.info(String.format("Starting request for get all  note with at %s",token));
+        log.info(String.format("Starting the request to get all  note with at %s",token));
 
         Session session = sessionService.getSessionFromAccessToken(token);
         return noteService.getAllNotes(id);
@@ -46,6 +47,10 @@ public class NoteAPI {
     public void removeNote(
             @RequestParam(value = "id",required = true) Integer id,
             @RequestParam(value = "token",required = true)String token){
+        log.info("Starting request to delete note");
+        noteService.removeNote(id);
 
     }
+
+
 }

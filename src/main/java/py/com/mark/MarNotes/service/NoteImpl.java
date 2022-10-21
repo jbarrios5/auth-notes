@@ -45,4 +45,10 @@ public class NoteImpl implements Note{
 
         return noteDao.getAllNotes(userId);
     }
+
+    @Override
+    public void removeNote(Integer id) throws ApiException {
+       log.info(String.format("We're going to delete note with id: [%s] ",id));
+        noteDao.removeNote(id);
+    }
 }

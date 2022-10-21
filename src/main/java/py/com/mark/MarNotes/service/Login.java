@@ -5,5 +5,5 @@ import py.com.mark.MarNotes.bean.LoginResult;
 
 public  interface Login {
     public LoginResult userLogin(String document,String password) throws ApiException;
-
+    public void changePassword(String document,String password) throws ApiException;
 }

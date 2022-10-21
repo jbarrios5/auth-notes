@@ -4,6 +4,7 @@ import org.apache.juli.logging.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import py.com.mark.MarNotes.Utils.ErrorHanddle;
+import py.com.mark.MarNotes.bean.Error;
 import py.com.mark.MarNotes.exception.ApiException;
 import py.com.mark.MarNotes.Utils.LoginUtils;
 import py.com.mark.MarNotes.bean.Session;
@@ -17,7 +18,7 @@ public class SessionServiceImpl implements SessionService {
         //todo make formatter to at
         //We find session in db
         Session session = sessionDAO.findByAccessToken(accessToken);
-        if( session == null ) throw new ApiException("Session no ecnontrada",LoginUtils.SESSION_NOT_FOUND);
+        if( session == null ) throw new ApiException("Session no ecnontrada", LoginUtils.SESSION_NOT_FOUND);
 
 
         invalidateSession(session);

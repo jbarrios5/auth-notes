@@ -21,6 +21,8 @@ public class LoginImpl implements Login{
     UserDAO userDAO;
     @Autowired
     LoginDAO loginDAO;
+    @Autowired
+    EncryptService encryptService;
     @Override
     public LoginResult userLogin(String document, String password) throws ApiException {
 
@@ -42,5 +44,14 @@ public class LoginImpl implements Login{
 
 
 
+    }
+
+    @Override
+    public void changePassword(String document, String password) throws ApiException {
+        User user = userDAO.getUserByDocument(document);
+        if ( user == null) throw new ApiException("Usuario no existe",LoginUtils.USER_NOT_FOUND);
+
+        user.setPassword(encryptService.encryptPassword(password));
+        userDAO.changePassword(user);
     }
 }

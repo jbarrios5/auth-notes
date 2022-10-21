@@ -2,12 +2,15 @@ package py.com.mark.MarNotes.dao;
 
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import py.com.marce.commons.User;
 import py.com.mark.MarNotes.bean.AccessToken;
 import py.com.mark.MarNotes.bean.Session;
 
+import java.sql.SQLDataException;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Date;
 
@@ -36,15 +39,24 @@ public class SessionDAOImpl implements SessionDAO {
 
     @Override
     public Session findByAccessToken(String at) {
-        return jdbcTemplate.queryForObject(GET_SESSION,new Object [] {at},
-                (rs,i)->{
-                    Session session = new Session();
 
-                    session.setSessionId(rs.getInt("user_id"));
-                    session.setExpires(rs.getTimestamp("expiration"));
-                    session.setAccessToken(rs.getString("token"));
-                    return session;
-                });
 
+        try {
+
+            return jdbcTemplate.queryForObject(GET_SESSION,new Object [] {at},
+                    (rs,i)->{
+                        Session session = new Session();
+                        session.setSessionId(rs.getInt("user_id"));
+                        session.setExpires(rs.getTimestamp("expiration"));
+                        session.setAccessToken(rs.getString("token"));
+                        return session;
+                    });
+        }catch (EmptyResultDataAccessException e){
+            System.out.println(""+e.getMessage());
+
+        }catch (Exception e){
+            System.out.println(""+e.getMessage());
+        }
+        return null;
     }
 }

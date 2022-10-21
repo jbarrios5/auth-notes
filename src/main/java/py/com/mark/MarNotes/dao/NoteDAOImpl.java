@@ -1,6 +1,7 @@
 package py.com.mark.MarNotes.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 import py.com.marce.commons.Note;
@@ -14,6 +15,7 @@ import java.util.List;
 public class NoteDAOImpl implements NoteDao{
     private static final String ADD_NOTE = "INSERT INTO notes (description,status,user_id) VALUES (?,?,?)";
     private static final String GET_NOTES = "SELECT * FROM notes WHERE user_id = ?";
+    private static final String REMOVE_NOTE = "DELETE FROM notes WHERE id =?";
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -42,5 +44,15 @@ public class NoteDAOImpl implements NoteDao{
             System.out.println(""+e);
         }
         return notes;
+    }
+
+    @Override
+    public void removeNote(Integer id) {
+        try{
+            jdbcTemplate.update(REMOVE_NOTE, new Object[]{id});
+        }catch (EmptyResultDataAccessException e){
+            System.out.println(""+e.getMessage());
+
+        }
     }
 }
